@@ -1,0 +1,26 @@
+version: "3.1"
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db_psql
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: postgres
+      MONGO_INITDB_ROOT_PASSWORD: postgres
+      MONGO_INITDB_DATABASE: db_psql
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo/init.js:/docker-entrypoint-initdb.d/init.js:ro
